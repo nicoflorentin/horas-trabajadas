@@ -4,10 +4,13 @@ import TimeTracker from './components/TimeTracker'
 
 function App() {
 
+  const saveData = () => {
+    alert('data saved')
+  }
+
   return (
-    <div className="App flex flex-col items-center justify-center">
-			<h1>Registro de horas</h1>
-      <TimeTracker />
+    <div className="App flex flex-col items-center justify-center w-screen">
+      <TimeTracker saveData={saveData} />
     </div>
   )
 }

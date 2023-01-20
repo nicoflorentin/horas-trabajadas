@@ -2,33 +2,31 @@ import React from "react";
 
 const AddWork = ({ handleSubmitAdd }) => {
 
-	const today = new Date()
 	return (
-		<div className="border-2 border-lime-400">
-			<p>Agregar dia</p>
+		<div className="p-2">
+			<p className="p-1">Agregar dia</p>
 			<form onSubmit={handleSubmitAdd}
 					className='flex flex-col h-52'>
 				<label>
-					<p>Fecha:</p>
+					<p className="pt-1">Fecha:</p>
 					<input
-						className="rounded-2xl h-8 w-36 "
+						className="rounded-2xl h-8 w-36 mt-1"
 						type="date"
 						name="date"
-						value={today}
 					/>
 				</label>
 				<label>
-					<p>Valor:</p>
+					<p className="pt-1">Valor:</p>
 					<input
-						className="rounded-2xl h-8 w-28"
+						className="rounded-2xl h-8 w-28 mt-1"
 						type="number"
 						name="rate"
 					/>
 				</label>
 				<label>
-					<p>Horas:</p>
+					<p className="pt-1">Horas:</p>
 					<input
-						className="rounded-2xl h-8 w-28"
+						className="rounded-2xl h-8 w-28 mt-1"
 						type="number"
 						name="hours"
 					/>

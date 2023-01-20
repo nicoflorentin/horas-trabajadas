@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import AddPay from "./AddPay";
 import AddWork from "./AddWork";
+import Table from "./Table";
 
-function TimeTracker() {
+function TimeTracker({saveData}) {
 	const [days, setDays] = useState([]);
 
 	function handleSubmitAdd(event) {
@@ -26,6 +27,7 @@ function TimeTracker() {
 		};
 		setDays([...days, day]);
 		form.reset();
+		saveData()
 	}
 
 	const handleSubmitPay = (event) => {
@@ -46,6 +48,7 @@ function TimeTracker() {
 			postType: "pay",
 		};
 		setDays([...days, payment]);
+		saveData()
 		form.reset();
 	};
 
@@ -53,80 +56,17 @@ function TimeTracker() {
 		const newDays = [...days];
 		newDays.splice(index, 1);
 		setDays(newDays);
+		saveData()
 	}
 
 	return (
-		<div className="flex flex-col items-center text-xs text-center border border-y-yellow-900">
-			<div className="flex">
+		<div className="flex flex-col items-center text-xs text-center shadow-2xl p-2 rounded-3xl">
+			<h1 className="text-lg">Registro de horas</h1>
+			<div className="flex bg-blue-100 p-4 rounded-2xl mb-5">
 				<AddWork handleSubmitAdd={handleSubmitAdd} />
 				<AddPay handleSubmitPay={handleSubmitPay} />
 			</div>
-			<table className="table-auto border border-gray-900 border-separate border-spacing-1">
-				<thead>
-					<tr>
-						<th className="bg-blue-300 p-2">Entrada</th>
-						<th className="bg-blue-300 p-2">Fecha</th>
-						<th className="bg-blue-300 p-2">CantHoras</th>
-						<th className="bg-blue-300 p-2">ValorHora</th>
-						<th className="bg-blue-300 p-2">TotalDia</th>
-						<th className="bg-blue-300 p-2">Debe</th>
-					</tr>
-				</thead>
-				<tbody>
-					{days.map((day, index) => {
-						if (day.postType === "add") {
-							return (
-								<>
-									<tr key={index} className="bg-orange-200">
-										<td>{day.postType}</td>
-										<td>{day.date}</td>
-										<td>{day.hours}</td>
-										<td>{day.rate}</td>
-										<td>{day.hours * day.rate}</td>
-										<td>{day.total}</td>
-										<td className="bg-white">
-											<button
-												className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-												onClick={() =>
-													handleDelete(index)
-												}
-											>
-												BorrarRegistro
-											</button>
-										</td>
-									</tr>
-								</>
-							);
-						} else if (day.postType === "pay") {
-							return (
-								<>
-									<tr
-										key={index}
-										className="bg-orange-400"
-									>
-										<td>{day.postType}</td>
-										<td>{day.date}</td>
-										<td></td>
-										<td></td>
-										<td>{day.rate}</td>
-										<td>{day.total}</td>
-										<td className="bg-white">
-											<button
-												className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-												onClick={() =>
-													handleDelete(index)
-												}
-											>
-												BorrarRegistro
-											</button>
-										</td>
-									</tr>
-								</>
-							);
-						}
-					})}
-				</tbody>
-			</table>
+			<Table handleDelete={handleDelete} days={days} />
 		</div>
 	);
 }
